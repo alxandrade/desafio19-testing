@@ -6,11 +6,13 @@ const productosRouter = Router();
 const controllerProducto = new ContenedorProductosMongo();
 
 productosRouter
-  .get("/", auth, controllerProducto.listarProductos)
-  // .get("/alta", auth, ContenedorProductosMongo.listarProductos)
-  // .get("/:id", auth, ContenedorProductosMongo.listarProductoPorId)
-  // .post ("/", auth, ContenedorProductosMongo.insertarProductos)
-  // .put("/:id", auth, ContenedorProductosMongo.actualizarProductoId)
-  // .delete ("/:id", auth, ContenedorProductosMongo.borrarProductoPorId)    
+  .get("/", controllerProducto.listarProductos)
+  .get("/:id", controllerProducto.listarProductoPorId)
+  .post ("/", controllerProducto.altaProducto)
+  .put("/:id", controllerProducto.actualizarProductoId)
+  .delete ("/:id", controllerProducto.borrarProductoPorId)    
+  // .get("/alta", auth, ContenedorProductosMongo.listarProductos)  
+  
+  
 
 export default productosRouter;

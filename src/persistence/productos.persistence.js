@@ -13,15 +13,12 @@ class ProductoPersistence {
       try {
         return await this._table.find({ _id: id });
       } catch (error) {
-        return {
-          status: "error",
-          mensaje: "No existe producto con ese ID o es un formato invalido",
-        };
+        return null
       }
     }
     
     // Insertar un Producto en la Tabla productos
-    async insertarProductos(obj) {
+    async altaProducto(obj) {
       try {        
         const resultnvoProducto = await this._table.create(obj);               
         return resultnvoProducto;
@@ -31,27 +28,23 @@ class ProductoPersistence {
     }
     
     // Actualizar los datos de un producto de un Id especifico
-    actualizarProductoId(id, params) {      
-      let {codigo, descripcion, precio,stock,foto} = params;
-
-      const resultado = this._table.updateOne({ _id: id }, 
-        {$set: { codigo, descripcion, precio,stock,foto}},
-        function(error, info) {
-          if (error) {
-            return true
-          } else {
-            return false
-          }
-        })        
+    async actualizarProductoId(id, params) {      
+      try {        
+        let result = await this._table.updateOne(id,params)
+        return result
+      } catch (error) {
+        console.log(error.message);
+      }   
     }
     
     // Borrar un producto de la tabla productos enviando su Id
-    async borrarProductoPorId(id) {
+    async borrarProductoPorId(id) { 
       try {
-        return this._table.findByIdAndDelete({ _id: id });
+        let result = await this._table.deleteOne(id);
+        return result  
       } catch (error) {
-        console.log(error);
-      }
+        return 0
+      }     
     }
   }
   
